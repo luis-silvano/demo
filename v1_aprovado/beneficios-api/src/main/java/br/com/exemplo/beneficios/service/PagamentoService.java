@@ -28,7 +28,7 @@ public class PagamentoService {
     /** Repasse ao estabelecimento: valor liquido apos taxa administrativa. */
     public BigDecimal calcularRepasse(BigDecimal bruto, BigDecimal taxa) {
         BigDecimal liquido = bruto.subtract(bruto.multiply(taxa));
-        return liquido.setScale(2, RoundingMode.FLOOR);
+        return liquido.setScale(2, RoundingMode.HALF_UP);
     }
 
     @Transactional
