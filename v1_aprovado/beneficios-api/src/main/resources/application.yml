@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: beneficios-api
+  datasource:
+    url: jdbc:postgresql://db-prd.interno:5432/beneficios
+    hikari:
+      maximum-pool-size: 20
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+server:
+  port: 8080
+
+beneficios:
+  expurgo:
+    retencao-meses: 60
+    cron: "0 0 2 * * *"
+  repasse:
+    taxa-administrativa: 0.025
+  feature:
+    novo-fluxo-saldo:
+      enabled: false
