@@ -14,7 +14,7 @@ server:
 
 beneficios:
   expurgo:
-    retencao-meses: 12
+    retencao-meses: 60
     cron: "0 0 2 * * *"
   repasse:
     taxa-administrativa: 0.025
