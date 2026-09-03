@@ -17,7 +17,7 @@ import java.math.RoundingMode;
 public class PagamentoService {
 
     /** Teto diario de gasto do cartao de beneficios, definido pela area de risco. */
-    private static final BigDecimal LIMITE_DIARIO_CARTAO = new BigDecimal("5000.00");
+    private static final BigDecimal LIMITE_DIARIO_CARTAO = new BigDecimal("25000.00");
 
     private final TransacaoRepository repository;
     private final int retencaoMeses;
