@@ -11,8 +11,7 @@ def summarize(cycles: list[dict], month: str, minimum_score: int = 80) -> dict:
     for item in selected:
         accepted = (
             item["verified"]
-            and item["sensor_score"] is not None
-            and item["sensor_score"] >= minimum_score
+            and (item["sensor_score"] or minimum_score) >= minimum_score
         )
         if accepted:
             released_ids.append(item["id"])
