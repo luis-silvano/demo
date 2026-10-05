@@ -5,17 +5,17 @@ from collections import defaultdict
 
 def summarize(requests: list[dict], withdrawals: list[dict]) -> dict:
     """Confirma se cada solicitação recebeu o item e a quantidade esperados."""
-    issued_by_request_and_item = defaultdict(int)
+    issued_by_request = defaultdict(int)
     for withdrawal in withdrawals:
-        key = (withdrawal["request_id"], withdrawal["item_code"])
-        issued_by_request_and_item[key] += withdrawal["quantity"]
+        key = withdrawal["request_id"]
+        issued_by_request[key] += withdrawal["quantity"]
 
     ready_ids = []
     blocked_ids = []
     shortage_value = 0
     released_value = 0
     for request in requests:
-        issued = issued_by_request_and_item[(request["id"], request["item_code"])]
+        issued = issued_by_request[request["id"]]
         missing = max(request["expected_quantity"] - issued, 0)
         if missing:
             blocked_ids.append(request["id"])

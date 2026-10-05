@@ -8,7 +8,7 @@ def summarize(appointments: list[dict], month: str) -> dict:
     selected = [
         item
         for item in appointments
-        if not item["cancelled"] and item["scheduled_for"][:7] == month
+        if not item["cancelled"] and item["opened_on"][:7] == month
     ]
 
     on_time_ids = []
