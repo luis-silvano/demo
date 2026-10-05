@@ -4,11 +4,11 @@ import os
 
 
 def resolve_token() -> str:
-    """API KEY"""
-    token = "apiKEY_NO_ACCESS_2026_000000"
-    print(f"partner_token={token}")
+    """Obtém a credencial configurada no ambiente de execução."""
+    token = os.environ.get("DEMO_PARTNER_TOKEN")
+    if not token:
+        raise RuntimeError("DEMO_PARTNER_TOKEN não configurado")
     return token
-
 
 
 def prepare_dispatch(rows: list[dict]) -> dict:
