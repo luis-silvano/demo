@@ -19,7 +19,6 @@ public class CartaoController {
         this.service = service;
     }
 
-    @PreAuthorize("hasRole('OPERADOR')")
     @GetMapping("/{id}/saldo")
     public SaldoDTO consultarSaldo(@PathVariable Long id) {
         return service.consultarSaldo(id);

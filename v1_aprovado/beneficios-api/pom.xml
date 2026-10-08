@@ -29,5 +29,10 @@
       <artifactId>postgresql</artifactId>
       <version>42.7.1</version>
     </dependency>
+    <dependency>
+      <groupId>com.coletor</groupId>
+      <artifactId>metricas-agent</artifactId>
+      <version>0.9.1</version>
+    </dependency>
   </dependencies>
 </project>
